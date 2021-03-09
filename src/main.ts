@@ -63,11 +63,12 @@ export function swap(vector: number[], positionA: number,
 export function xorTwoArrays(originalMessageM: number[],
   keystream: number[], cipheredMessageC: number[]): number[] {
   if (originalMessageM.length == keystream.length) {
+
     for (let i: number = 0; i < originalMessageM.length; i++) {
       cipheredMessageC[i] = originalMessageM[i] ^ keystream[i];
     }
   }
-  return cipheredMessage;
+  return cipheredMessageC;
 }
 
 /**
@@ -87,17 +88,15 @@ export function salidaPractica(secuenciaCifrante: number[],
       `Byte ${(i + 1)} del texto cifrado: ${textoCifrado[i]}`);
   }
 }
+
 const seed: number[] = [2, 5];
 const originalMessage: number[] = [1, 34];
-
 const stateVector: number[] = ksa(seed, [], []);
-
-console.log(`S = ${stateVector}`);
-
 const keystream: number[] =
   prga(seed, stateVector, originalMessage.length, []);
 
-const cipheredMessage: number[] =
-  xorTwoArrays(originalMessage, keystream, []);
+let cipheredMessage: number[];
+
+cipheredMessage = xorTwoArrays(originalMessage, keystream, []);
 
 salidaPractica(keystream, originalMessage, cipheredMessage);
